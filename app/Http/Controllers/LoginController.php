@@ -18,7 +18,8 @@ class LoginController extends Controller
         $this->kb = new KategoriBukuController();
     }
 
-    public function auth(Request $request) {
+    public function auth(Request $request)
+    {
         if ($request->session()->has('logged')) {
             return view('home');
         }
@@ -28,27 +29,29 @@ class LoginController extends Controller
             'pass' => 'required'
         ]);
 
-        $credentials = Anggota::where('username',$request->input('uname'))->first();
+        $credentials = Anggota::where('username', $request->input('uname'))->first();
         if (!$credentials) {
             return response()->json(['msg' => 'Username atau Password salah!'], 500);
         }
         $checkPass = decrypt($credentials->password);
-        
+
         if ($checkPass == $request->input('pass')) {
-            $request->session()->put('logged', $credentials->nama_anggota);
+            $request->session()->put('logged', $credentials->id_anggota);
 
             return redirect('home');
         }
     }
 
-    public function home() {
+    public function home()
+    {
         $dataBuku = $this->buku->index();
         $dataKb = $this->kb->index();
 
         return view('home', ['buku' => $dataBuku, 'kb' => $dataKb]);
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         if ($request->session()->has('logged')) {
             $request->session()->forget('logged');
 

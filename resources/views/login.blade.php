@@ -95,7 +95,7 @@
 <!-- Bottom Template -->
 <div class="row mt-4">
   <div class="col-md-12 cust-footer text-center">
-    <p class="mt-3 mb-5" style="font-weight: 600;">Copyright &#169; 2020 DenjanD</p>
+    <p class="mt-3 mb-5" style="font-weight: 600;">Copyright &#169; 2020</p>
   </div>
 </div>
 

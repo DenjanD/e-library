@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Buku;
 use App\KategoriBuku;
+use App\Transaksi;
 
 class BukuController extends Controller
 {
@@ -29,9 +30,15 @@ class BukuController extends Controller
     }
 
     public function details($id) {
-        $detailsData = Buku::where('id_buku',$id)->get();
+        // $detailsData = Buku::where('id_buku',$id)->get();
+        $detailsData = Buku::where('id_buku',$id)->join('kategori_bukus','kategori','=','id_kategori')
+                        ->select('bukus.*','kategori_bukus.nama as kategori')
+                        ->get();
 
-        return view('detail',['detailsData' => $detailsData]);
+        $reviewsData = Transaksi::where('id_buku',$id)->join('anggotas','id_peminjam','=','id_anggota')
+                        ->select('transaksis.komentar','anggotas.nama_anggota as peminjam','transaksis.tanggal_kembali')
+                        ->get();
+        return view('detail',['detailsData' => $detailsData, 'reviews' => $reviewsData]);
     }
 
     public function add(Request $request) {
@@ -40,6 +47,7 @@ class BukuController extends Controller
             'penulis' => 'required',
             'penerbit' => 'required',
             'kategori' => 'required',
+            'sinopsis' => 'required',
             'gambar' => 'required'
         ]);
 
@@ -48,6 +56,7 @@ class BukuController extends Controller
             'penulis' => $request->input('penulis'),
             'penerbit' => $request->input('penerbit'),
             'kategori' => $request->input('kategori'),
+            'sinopsis' => $request->input('sinopsis'),
             'gambar' => $request->input('gambar'),
             'status' => 'T'
         ]);
@@ -73,8 +82,14 @@ class BukuController extends Controller
         if ($request->input('kategori') != '') {
             $getBuku->kategori = $request->input('kategori');
         }
+        if ($request->input('sinopsis') != '') {
+            $getBuku->sinopsis = $request->input('sinopsis');
+        }
         if ($request->input('gambar') != '') {
             $getBuku->gambar = $request->input('gambar');
+        }
+        if ($request->input('status') != '') {
+            $getBuku->status = $request->input('status');
         }
 
         if ($getBuku->update()) {

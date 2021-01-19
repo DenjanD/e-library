@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +15,21 @@ use Illuminate\Http\Request;
 Route::get('/', function (Request $request) {
     if ($request->session()->has('logged')) {
         return redirect('home');
-    } else{
+    } else {
         return view('login');
     }
 });
 
-Route::post('auth','LoginController@auth');
-Route::get('home','LoginController@home');
-Route::get('search','BukuController@search');
-Route::get('details/{id}','BukuController@details');
-Route::get('logout','LoginController@logout');
+Route::post('auth', 'LoginController@auth');
+
+Route::get('home', 'LoginController@home');
+Route::get('search', 'BukuController@search');
+Route::get('details/{id}', 'BukuController@details');
+
+Route::post('transaction', 'TransaksiController@add');
+Route::post('transaction/update', 'TransaksiController@update');
+Route::post('transaction/verify', 'TransaksiController@verify');
+
+Route::get('myorder', 'TransaksiController@getUsers');
+
+Route::get('logout', 'LoginController@logout');

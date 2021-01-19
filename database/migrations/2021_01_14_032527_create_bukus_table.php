@@ -19,6 +19,7 @@ class CreateBukusTable extends Migration
             $table->string('penulis',40);
             $table->string('penerbit',40);
             $table->bigInteger('kategori')->unsigned();
+            $table->text('sinopsis');
             $table->enum('status', ['T','D','K']);
             $table->string('gambar',50);
             $table->timestamps();
