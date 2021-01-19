@@ -18,8 +18,13 @@ class TransaksiController extends Controller
     public function getUsers(Request $request)
     {
         //pake join dan select buat ambil nama buku
-        $getOrders = Transaksi::where('id_peminjam', $request->session()->get('logged'))->get();
-        return view('myorder');
+        $getOrders = Transaksi::where('id_peminjam', $request->session()->get('logged'))
+            ->select('transaksis.*', 'bukus.judul')
+            ->join('bukus', 'transaksis.id_buku', '=', 'bukus.id_buku')
+            ->get();
+        $getOrders = $getOrders->sortByDesc('id_transaksi');
+
+        return view('myorder', ['orders' => $getOrders]);
     }
 
     public function add(Request $request)

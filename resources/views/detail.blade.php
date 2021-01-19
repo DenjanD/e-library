@@ -21,9 +21,9 @@
                 @if($d->status == 'T')
                 <button class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#exampleModal">Pinjam Buku</button>
                 @elseif($d->status == 'D')
-                <button class="btn btn-secondary btn-block mt-4" data-toggle="modal" data-target="#exampleModal" disabled>Sedang dipinjam</button>
+                <button class="btn btn-secondary btn-block mt-4" disabled>Sedang dipinjam</button>
                 @elseif($d->status == 'K')
-                <button class="btn btn-secondary btn-block mt-4" data-toggle="modal" data-target="#exampleModal" disabled>Buku kosong</button>
+                <button class="btn btn-secondary btn-block mt-4" disabled>Buku kosong</button>
                 @endif
             </div>
             <div class="col-md-7">
