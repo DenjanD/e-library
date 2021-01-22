@@ -7,14 +7,16 @@ use App\Anggota;
 
 class AnggotaController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $anggota = Anggota::all();
 
         return response()->json(['data' => $anggota]);
     }
 
-    public function add(Request $request) {
-        $this->validate($request,[
+    public function add(Request $request)
+    {
+        $this->validate($request, [
             'username' => 'required',
             'password' => 'required',
             'nama_anggota' => 'required',
@@ -33,13 +35,14 @@ class AnggotaController extends Controller
         ]);
 
         if ($newAnggota->save()) {
-            return response()->json(['msg' => 'Anggota nambah'], 200);
+            return redirect('admin/anggota');
         }
         return response()->json(['msg' => 'Gagal tambah anggota'], 500);
     }
 
-    public function update(Request $request) {
-        $getAnggota = Anggota::where('id_anggota',$request->input('anggota'))->first();
+    public function update(Request $request)
+    {
+        $getAnggota = Anggota::where('id_anggota', $request->input('anggota'))->first();
 
         if ($request->input('username') != '') {
             $getAnggota->username = $request->input('username');
@@ -66,7 +69,8 @@ class AnggotaController extends Controller
         return response()->json(['msg' => 'Gagal merubah anggota'], 500);
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $getAnggota = Anggota::findOrFail($id);
 
         if ($getAnggota->delete()) {

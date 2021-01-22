@@ -20,6 +20,38 @@ Route::get('/', function (Request $request) {
     }
 });
 
+Route::get('/veryadmin', function (Request $request) {
+    if ($request->session()->has('administrator')) {
+        return view('admin/dashboard');
+    } else {
+        return view('admin/login');
+    }
+});
+
+//Admin Routes
+Route::post('admin/login', 'AdminController@login');
+Route::get('admin/logout', 'AdminController@logout');
+Route::get('admin/dashboard', 'AdminController@dashboard');
+
+Route::get('admin/katb', 'AdminController@katb');
+Route::get('admin/katb/{id}', 'AdminController@katbSpec');
+Route::post('admin/katb', 'KategoriBukuController@add');
+Route::post('admin/katb/update', 'KategoriBukuController@update');
+Route::delete('admin/katb/{id}', 'KategoriBukuController@delete');
+
+Route::get('admin/buku', 'AdminController@buku');
+Route::get('admin/buku/{id}', 'AdminController@bukuSpec');
+Route::post('admin/buku', 'BukuController@add');
+Route::post('admin/buku/update', 'BukuController@update');
+Route::delete('admin/buku/{id}', 'BukuController@delete');
+
+Route::get('admin/anggota', 'AdminController@anggota');
+Route::get('admin/anggota/{id}', 'AdminController@anggotaSpec');
+Route::post('admin/anggota', 'AnggotaController@add');
+Route::post('admin/anggota/update', 'AnggotaController@update');
+Route::delete('admin/anggota/{id}', 'AnggotaController@delete');
+// ./
+
 Route::post('auth', 'LoginController@auth');
 
 Route::get('home', 'LoginController@home');
