@@ -46,8 +46,10 @@
 
                     @foreach($buku as $b)
                     <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card h-100">
-                            <img class="card-img-top" src="http://placehold.it/700x400" alt="">
+                        <div class="card h-100 shadow">
+                            <div class="text-center">
+                                <img class="card-img-top" src="{{ url('bukuPhotos') }}/{{ $b->gambar }}" alt="" style="max-width: 200px;max-height:280px;">
+                            </div>
                             <div class="card-body">
                                 <h4 class="card-title">
                                     {{ $b->judul }}

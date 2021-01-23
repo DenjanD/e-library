@@ -33,10 +33,10 @@
             <div class="col-md-12">
                 <div class="card shadow mb-5">
                     <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="..." alt="...">
+                        <div class="col-md-3">
+                            <img src="{{ url('bukuPhotos') }}/{{ $o->gambar }}" style="max-width: 180px;max-height: 350px;">
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $o->judul }}</h5>
                                 <p class="card-text">
@@ -97,6 +97,7 @@
                             @csrf
                             Anda yakin buku sudah dikembalikan?
                             <input type="hidden" value="" id="prep" name="transaksi">
+                            <textarea class="form-control mt-3" name="komentar" placeholder="Tuliskan komentar Anda terhadap buku ini..."></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>

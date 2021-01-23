@@ -39,6 +39,8 @@ class LoginController extends Controller
             $request->session()->put('logged', $credentials->id_anggota);
 
             return redirect('home');
+        } else {
+            return response()->json(['msg' => 'An Error Occured']);
         }
     }
 

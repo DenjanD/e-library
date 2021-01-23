@@ -19,7 +19,7 @@ class TransaksiController extends Controller
     {
         //pake join dan select buat ambil nama buku
         $getOrders = Transaksi::where('id_peminjam', $request->session()->get('logged'))
-            ->select('transaksis.*', 'bukus.judul')
+            ->select('transaksis.*', 'bukus.judul', 'bukus.gambar')
             ->join('bukus', 'transaksis.id_buku', '=', 'bukus.id_buku')
             ->get();
         $getOrders = $getOrders->sortByDesc('id_transaksi');
@@ -47,7 +47,7 @@ class TransaksiController extends Controller
         $upStatusBuku->status = 'D';
 
         if ($newTransaksi->save() && $upStatusBuku->update()) {
-            return response()->json(['msg' => 'Transaksi nambah'], 200);
+            return redirect('myorder');
         }
         return response()->json(['msg' => 'Gagal tambah transaksi'], 500);
     }
@@ -74,21 +74,21 @@ class TransaksiController extends Controller
         }
 
         if ($getTransaksi->update()) {
-            return response()->json(['msg' => 'Transaksi terubah'], 200);
+            return redirect('myorder');
         }
         return response()->json(['msg' => 'Gagal merubah transaksi'], 500);
     }
 
     public function verify(Request $request)
     {
-        $getTransaksi = Transaksi::where('id_transaksi', $request->input('transaksi'))->first();
+        $getTransaksi = Transaksi::where('id_transaksi', $request->input('idVerify'))->first();
         $getBuku = Buku::where('id_buku', $getTransaksi->id_buku)->first();
 
-        $getTransaksi->id_verifikator = $request->input('verifikator');
+        $getTransaksi->id_verifikator = $request->session()->get('administrator');
         $getBuku->status = 'T';
 
         if ($getTransaksi->update() && $getBuku->update()) {
-            return response()->json(['msg' => 'Transaksi selesai'], 200);
+            return redirect('admin/transaksi');
         }
         return response()->json(['msg' => 'Gagal merubah transaksi'], 500);
     }

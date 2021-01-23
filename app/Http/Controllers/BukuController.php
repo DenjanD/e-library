@@ -42,6 +42,7 @@ class BukuController extends Controller
         $reviewsData = Transaksi::where('id_buku', $id)->join('anggotas', 'id_peminjam', '=', 'id_anggota')
             ->select('transaksis.komentar', 'anggotas.nama_anggota as peminjam', 'transaksis.tanggal_kembali')
             ->get();
+
         return view('detail', ['detailsData' => $detailsData, 'reviews' => $reviewsData]);
     }
 

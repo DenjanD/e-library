@@ -28,44 +28,47 @@
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
-                                                    <th>Id_Anggota</th>
-                                                    <th>Username</th>
-                                                    <th>Nama Anggota</th>
-                                                    <th>Telp</th>
-                                                    <th>Alamat</th>
-                                                    <th>Jenis Kelamin</th>
+                                                    <th>Id_Transaksi</th>
+                                                    <th>Peminjam</th>
+                                                    <th>Buku</th>
+                                                    <th>Tanggal Pinjam</th>
+                                                    <th>Tanggal Kembali</th>
+                                                    <th>Jumlah Denda</th>
+                                                    <th>Verifikator</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
                                                 <tr>
-                                                    <th>Id_Anggota</th>
-                                                    <th>Username</th>
-                                                    <th>Nama Anggota</th>
-                                                    <th>Telp</th>
-                                                    <th>Alamat</th>
-                                                    <th>Jenis Kelamin</th>
+                                                    <th>Id_Transaksi</th>
+                                                    <th>Peminjam</th>
+                                                    <th>Buku</th>
+                                                    <th>Tanggal Pinjam</th>
+                                                    <th>Tanggal Kembali</th>
+                                                    <th>Jumlah Denda</th>
+                                                    <th>Verifikator</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
-                                                @foreach($dataAng as $d)
+                                                @foreach($dataTra as $d)
                                                 <tr>
-                                                    <td>{{ $d->id_anggota }}</td>
-                                                    <td>{{ $d->username }}</td>
+                                                    <td>{{ $d->id_transaksi }}</td>
                                                     <td>{{ $d->nama_anggota }}</td>
-                                                    <td>{{ $d->telp }}</td>
-                                                    <td>{{ $d->alamat }}</td>
+                                                    <td>{{ $d->judul }}</td>
+                                                    <td>{{ $d->tanggal_pinjam }}</td>
+                                                    <td>{{ $d->tanggal_kembali }}</td>
+                                                    <td>{{ $d->jumlah_denda }}</td>
                                                     <td>
-                                                        @if($d->jenis_kelamin == 'L')
-                                                        Laki-Laki
-                                                        @elseif($d->jenis_kelamin == 'P')
-                                                        Perempuan
+                                                        @if($d->nama_admin != '')
+                                                        {{ $d->nama_admin }}
+                                                        @else
+                                                        <badge class="badge badge-warning">Belum Diverifikasi</badge>
                                                         @endif
                                                     </td>
                                                     <td>
                                                         <!--<button class="btn btn-success btn-sm" onclick="editModal({{ $d->id_anggota }})" data-target="#editModal" data-toggle="modal"><i class="fa fa-pen"></i></button>-->
-                                                        <button class="btn btn-primary btn-sm" onclick="detailModal({{ $d->id_anggota }})" data-target="#detailsModal" data-toggle="modal"><i class="fa fa-align-justify"></i></button>
+                                                        <button class="btn btn-primary btn-sm" onclick="detailModal({{ $d->id_transaksi }})" data-target="#detailsModal" data-toggle="modal"><i class="fa fa-align-justify"></i></button>
                                                         <!--<button class="btn btn-danger btn-sm" onclick="prepDelete({{ $d->id_anggota }})" data-target="#deleteModal" data-toggle="modal"><i class="fa fa-trash"></i></button>-->
                                                     </td>
                                                 </tr>
@@ -161,7 +164,7 @@
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="detailsModalTitle">Detail data anggota</h5>
+                                    <h5 class="modal-title" id="detailsModalTitle">Detail data peminjaman</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -169,25 +172,34 @@
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h6 class="mt-3">Id Anggota</h6>
-                                            <p id="detail1"></p>
-                                            <h6 class="mt-3">Nama Anggota</h6>
-                                            <p id="detail2"></p>
-                                            <h6 class="mt-3">Telepon</h6>
-                                            <p id="detail3"></p>
-                                            <h6 class="mt-3">Alamat</h6>
-                                            <p id="detail4"></p>
+                                            <form action="{{ url('admin/transaksi/verify') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" id="idTran" name="idVerify">
+                                                <h6 class="mt-3">Id Transaksi</h6>
+                                                <p id="detail1"></p>
+                                                <h6 class="mt-3">Nama Anggota</h6>
+                                                <p id="detail2"></p>
+                                                <h6 class="mt-3">Judul Buku</h6>
+                                                <p id="detail3"></p>
+                                                <h6 class="mt-3">Verifikator</h6>
+                                                <p id="detail4"></p>
                                         </div>
                                         <div class="col-md-6">
-                                            <h6 class="mt-3">Jenis Kelamin</h6>
+                                            <h6 class="mt-3">Tanggal Pinjam</h6>
                                             <p id="detail5"></p>
-                                            <h6 class="mt-3">Username</h6>
+                                            <h6 class="mt-3">Tanggal Kembali</h6>
                                             <p id="detail6"></p>
+                                            <h6 class="mt-3">Denda</h6>
+                                            <p id="detail7"></p>
+                                            <h6 class="mt-3">Komentar</h6>
+                                            <p id="detail8"></p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                                    <input type="submit" class="btn btn-success" id="buttVer" value="Verifikasi">
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -248,21 +260,26 @@
         function detailModal(getId) {
             $.ajax({
                 type: "GET",
-                url: "{{ url('admin/anggota') }}" + "/" + getId,
+                url: "{{ url('admin/transaksi') }}" + "/" + getId,
                 dataType: "json",
                 success: function(response) {
+                    console.log('detailMuncul');
                     response.detailData.forEach(function(item) {
-                        document.getElementById('detail1').innerHTML = item.id_anggota;
+                        document.getElementById('detail1').innerHTML = item.id_transaksi;
                         document.getElementById('detail2').innerHTML = item.nama_anggota;
-                        document.getElementById('detail3').innerHTML = item.telp;
-                        document.getElementById('detail4').innerHTML = item.alamat;
-                        if (item.jenis_kelamin == 'L') {
-                            document.getElementById('detail5').innerHTML = 'Laki-Laki';
+                        document.getElementById('detail3').innerHTML = item.judul;
+                        if (item.nama_admin == null) {
+                            document.getElementById('idTran').value = item.id_transaksi;
+                            document.getElementById('detail4').innerHTML = "<badge class='badge badge-warning'>Belum diverifikasi</badge>";
+                            document.getElementById('buttVer').style.display = "block"
+                        } else {
+                            document.getElementById('detail4').innerHTML = item.nama_admin;
+                            document.getElementById('buttVer').style.display = "none"
                         }
-                        if (item.jenis_kelamin == 'P') {
-                            document.getElementById('detai5').innerHTML = 'Perempuan';
-                        }
-                        document.getElementById('detail6').innerHTML = item.username;
+                        document.getElementById('detail5').innerHTML = item.tanggal_pinjam;
+                        document.getElementById('detail6').innerHTML = item.tanggal_kembali;
+                        document.getElementById('detail7').innerHTML = item.jumlah_denda;
+                        document.getElementById('detail8').innerHTML = item.komentar;
                     });
                 }
             });

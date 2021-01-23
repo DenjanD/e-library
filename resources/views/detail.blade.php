@@ -16,8 +16,8 @@
         <!-- Details -->
         @foreach($detailsData as $d)
         <div class="row mt-5 mb-4">
-            <div class="col-md-5">
-                <img src="{{ url('http://placehold.it/400x300') }}">
+            <div class="col-md-5 text-center">
+                <img src="{{ url('bukuPhotos') }}/{{ $d->gambar }}" style="width: 250px; height: 380px;">
                 @if($d->status == 'T')
                 <button class="btn btn-primary btn-block mt-4" data-toggle="modal" data-target="#exampleModal">Pinjam Buku</button>
                 @elseif($d->status == 'D')
@@ -59,7 +59,7 @@
                 <h3>Ulasan pembaca</h3>
                 <div class="row mt-4">
                     <div class="col-md-12">
-                        @if(!$reviews)
+                        @if($reviews == '')
                         <p>Tidak ada ulasan untuk buku ini.</p>
                         @else
                         @foreach($reviews as $r)

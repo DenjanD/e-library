@@ -25,17 +25,25 @@ class AnggotaController extends Controller
             'jenis_kelamin' => 'required'
         ]);
 
+        if ($request->input('jenis_kelamin') == 'Laki-Laki') {
+            $jk = 'L';
+        } else if ($request->input('jenis_kelamin') == 'Perempuan') {
+            $jk = 'P';
+        } else {
+            return response()->json(['msg' => 'Jenis kelamin belum diisi'], 404);
+        }
+
         $newAnggota = new Anggota([
             'username' => $request->input('username'),
             'password' => encrypt($request->input('password')),
             'nama_anggota' => $request->input('nama_anggota'),
             'telp' => $request->input('telp'),
             'alamat' => $request->input('alamat'),
-            'jenis_kelamin' => $request->input('jenis_kelamin')
+            'jenis_kelamin' => $jk
         ]);
 
         if ($newAnggota->save()) {
-            return redirect('admin/anggota');
+            return redirect('/');
         }
         return response()->json(['msg' => 'Gagal tambah anggota'], 500);
     }

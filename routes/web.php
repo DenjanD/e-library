@@ -32,6 +32,8 @@ Route::get('/veryadmin', function (Request $request) {
 Route::post('admin/login', 'AdminController@login');
 Route::get('admin/logout', 'AdminController@logout');
 Route::get('admin/dashboard', 'AdminController@dashboard');
+Route::get('admin/katbchart', 'AdminController@katbchart');
+Route::get('admin/transchart', 'AdminController@transchart');
 
 Route::get('admin/katb', 'AdminController@katb');
 Route::get('admin/katb/{id}', 'AdminController@katbSpec');
@@ -50,8 +52,19 @@ Route::get('admin/anggota/{id}', 'AdminController@anggotaSpec');
 Route::post('admin/anggota', 'AnggotaController@add');
 Route::post('admin/anggota/update', 'AnggotaController@update');
 Route::delete('admin/anggota/{id}', 'AnggotaController@delete');
+
+Route::get('admin/transaksi', 'AdminController@transaksi');
+Route::get('admin/transaksi/{id}', 'AdminController@transaksiSpec');
+Route::post('admin/transaksi/verify', 'TransaksiController@verify');
+
+Route::get('admin/laporan', 'AdminController@laporan');
+Route::post('admin/laporan/export', 'AdminController@export');
 // ./
 
+Route::get('register', function () {
+    return view('register');
+});
+Route::post('register', 'AnggotaController@add');
 Route::post('auth', 'LoginController@auth');
 
 Route::get('home', 'LoginController@home');
