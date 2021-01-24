@@ -60,10 +60,12 @@
                                                     <td>{{ $d->tanggal_kembali }}</td>
                                                     <td>{{ $d->jumlah_denda }}</td>
                                                     <td>
-                                                        @if($d->nama_admin != '')
-                                                        {{ $d->nama_admin }}
-                                                        @else
+                                                        @if($d->nama_admin == '' && $d->tanggal_kembali == null)
+                                                        <badge class="badge badge-warning">Belum Kembali</badge>
+                                                        @elseif($d->nama_admin == '' && $d->tanggal_kembali != null)
                                                         <badge class="badge badge-warning">Belum Diverifikasi</badge>
+                                                        @else
+                                                        {{ $d->nama_admin }}
                                                         @endif
                                                     </td>
                                                     <td>
@@ -268,10 +270,13 @@
                         document.getElementById('detail1').innerHTML = item.id_transaksi;
                         document.getElementById('detail2').innerHTML = item.nama_anggota;
                         document.getElementById('detail3').innerHTML = item.judul;
-                        if (item.nama_admin == null) {
+                        if (item.nama_admin == null && item.tanggal_kembali != null) {
                             document.getElementById('idTran').value = item.id_transaksi;
                             document.getElementById('detail4').innerHTML = "<badge class='badge badge-warning'>Belum diverifikasi</badge>";
                             document.getElementById('buttVer').style.display = "block"
+                        } else if (item.nama_admin == null && item.tanggal_kembali == null) {
+                            document.getElementById('detail4').innerHTML = "<badge class='badge badge-warning'>Belum kembali</badge>";
+                            document.getElementById('buttVer').style.display = "none"
                         } else {
                             document.getElementById('detail4').innerHTML = item.nama_admin;
                             document.getElementById('buttVer').style.display = "none"

@@ -24,6 +24,11 @@
                                     <h3 class="text-center font-weight-light my-4">ELibrary</h3>
                                 </div>
                                 <div class="card-body">
+                                    @if($msg != '')
+                                    <div class="alert alert-success" role="alert" id="warnPass" style="display: none;">
+                                        {{ $msg }}
+                                    </div>
+                                    @endif
                                     <form action="admin/login" method="post">
                                         @csrf
                                         <div class="form-group">

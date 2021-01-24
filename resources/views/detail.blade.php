@@ -57,14 +57,14 @@
         <div class="row mb-4">
             <div class="col-md-12">
                 <h3>Ulasan pembaca</h3>
-                <div class="row mt-4">
+                <div class="row mt-1">
                     <div class="col-md-12">
                         @if($reviews == '')
                         <p>Tidak ada ulasan untuk buku ini.</p>
                         @else
                         @foreach($reviews as $r)
                         @if($r->komentar != '-' && $r->komentar != null)
-                        <div class="card">
+                        <div class="card shadow-sm mt-4">
                             <div class="card-body">
                                 <h6>{{ $r->peminjam }}</h6>
                                 <p>{{ $r->komentar }}</p>

@@ -15,12 +15,15 @@ class CreateAnggotasTable extends Migration
     {
         Schema::create('anggotas', function (Blueprint $table) {
             $table->bigIncrements('id_anggota');
-            $table->string('username',20);
+            $table->string('username', 20);
             $table->string('password');
-            $table->string('nama_anggota',40);
-            $table->string('telp',12);
+            $table->string('nama_anggota', 40);
+            $table->date('tgl_lahir');
+            $table->string('email', 40);
+            $table->string('telp', 12);
             $table->text('alamat');
-            $table->enum('jenis_kelamin', ['L','P']);
+            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->string('foto', 50)->nullable();
             $table->timestamps();
         });
     }

@@ -31,7 +31,7 @@
                     <a class="nav-link @if($title == 'Pinjaman') active @endif" href="{{ url('myorder') }}">Pinjaman Saya</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @if($title == 'Profil') active @endif" href="#">Profil</a>
+                    <a class="nav-link @if($title == 'Profil') active @endif" href="{{ url('profile') }}">Profil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('logout') }}">Logout</a>

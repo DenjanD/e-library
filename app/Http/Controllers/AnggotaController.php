@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Anggota;
+use File;
 
 class AnggotaController extends Controller
 {
@@ -14,6 +15,21 @@ class AnggotaController extends Controller
         return response()->json(['data' => $anggota]);
     }
 
+    public function profile(Request $request)
+    {
+        $anggota = Anggota::where('id_anggota', $request->session()->get('logged'))->get();
+
+        return view('profile', ['profileData' => $anggota]);
+    }
+
+    public function checkPass(Request $request)
+    {
+        $passAnggota = Anggota::where('id_anggota', $request->session()->get('logged'))->first();
+        $pass = decrypt($passAnggota->password);
+
+        return response()->json(['pass' => $pass]);
+    }
+
     public function add(Request $request)
     {
         $this->validate($request, [
@@ -22,7 +38,9 @@ class AnggotaController extends Controller
             'nama_anggota' => 'required',
             'telp' => 'required',
             'alamat' => 'required',
-            'jenis_kelamin' => 'required'
+            'jenis_kelamin' => 'required',
+            'email' => 'required',
+            'tgl_lahir' => 'required'
         ]);
 
         if ($request->input('jenis_kelamin') == 'Laki-Laki') {
@@ -39,18 +57,23 @@ class AnggotaController extends Controller
             'nama_anggota' => $request->input('nama_anggota'),
             'telp' => $request->input('telp'),
             'alamat' => $request->input('alamat'),
-            'jenis_kelamin' => $jk
+            'jenis_kelamin' => $jk,
+            'email' => $request->input('email'),
+            'tgl_lahir' => $request->input('tgl_lahir'),
+            'foto' => ''
         ]);
 
         if ($newAnggota->save()) {
-            return redirect('/');
+            return view('login', ['msg' => 'Akun berhasil dibuat! Silakan login untuk melanjutkan']);
         }
         return response()->json(['msg' => 'Gagal tambah anggota'], 500);
     }
 
     public function update(Request $request)
     {
-        $getAnggota = Anggota::where('id_anggota', $request->input('anggota'))->first();
+        $getAnggota = Anggota::where('id_anggota', $request->session()->get('logged'))->first();
+        $oldPict = $getAnggota->foto;
+        $newPict = $request->file('foto');
 
         if ($request->input('username') != '') {
             $getAnggota->username = $request->input('username');
@@ -67,12 +90,27 @@ class AnggotaController extends Controller
         if ($request->input('alamat') != '') {
             $getAnggota->alamat = $request->input('alamat');
         }
+        if ($request->input('email') != '') {
+            $getAnggota->email = $request->input('email');
+        }
+        if ($request->input('tgl_lahir') != '') {
+            $getAnggota->tgl_lahir = $request->input('tgl_lahir');
+        }
+        if ($newPict != '') {
+            if ($oldPict == '') {
+                $getAnggota->foto = $newPict->getClientOriginalName();
+            } else {
+                File::delete(base_path('public/userPhotos/' . $oldPict));
+                $getAnggota->foto = $newPict->getClientOriginalName();
+            }
+        }
         if ($request->input('jenis_kelamin') != '') {
             $getAnggota->jenis_kelamin = $request->input('jenis_kelamin');
         }
 
         if ($getAnggota->update()) {
-            return response()->json(['msg' => 'Anggota terubah'], 200);
+            $newPict->move(base_path('public/userPhotos'), $getAnggota->foto);
+            return redirect('profile');
         }
         return response()->json(['msg' => 'Gagal merubah anggota'], 500);
     }

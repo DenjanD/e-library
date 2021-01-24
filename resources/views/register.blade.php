@@ -77,10 +77,15 @@
                     <!-- Login Form -->
                     <div class="row justify-content-center">
                         <div class="col-10 col-md-10 align-self-center">
-                            <form method="post" action="register" class="mt-4">
+                            <div class="alert alert-warning" role="alert" id="warnPass" style="display: none;">
+                                Password tidak cocok!
+                            </div>
+                            <form method="post" action="register" class="mt-4" onsubmit="return checkPass()">
                                 @csrf
                                 <label class="form-label">Nama Lengkap</label>
                                 <input class="form-control" name="nama_anggota" type="text">
+                                <label class="form-label mt-3">Tanggal Lahir</label>
+                                <input class="form-control" name="tgl_lahir" type="date">
                                 <label class="form-label mt-3">Telepon</label>
                                 <input class="form-control" name="telp" type="number">
                                 <label class="form-label mt-3">Alamat</label>
@@ -91,6 +96,8 @@
                                     <option>Laki-Laki</option>
                                     <option>Perempuan</option>
                                 </select>
+                                <label class="form-label mt-3">Email</label>
+                                <input class="form-control" name="email" type="text">
                                 <label class="form-label mt-3">Username</label>
                                 <input class="form-control" name="username" type="text">
                                 <label class="form-label mt-3">Password</label>
@@ -120,6 +127,19 @@
         <!-- /Content -->
 
     </div>
+    <script>
+        function checkPass() {
+            var newPass = document.getElementById('pass').value;
+            var confNewPass = document.getElementById('confirmPass').value;
+            if (newPass == confNewPass) {
+                document.getElementById('warnPass').style.display = 'none'
+                return true;
+            } else {
+                document.getElementById('warnPass').style.display = 'block'
+                return false;
+            }
+        }
+    </script>
 </body>
 
 </html>

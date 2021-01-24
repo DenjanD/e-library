@@ -77,4 +77,9 @@ Route::post('transaction/verify', 'TransaksiController@verify');
 
 Route::get('myorder', 'TransaksiController@getUsers');
 
+Route::get('profile', 'AnggotaController@profile');
+Route::get('profile/checkpass', 'AnggotaController@checkPass');
+Route::post('profile/cpass', 'AnggotaController@update');
+Route::post('profile/uppict', 'AnggotaController@update');
+
 Route::get('logout', 'LoginController@logout');
