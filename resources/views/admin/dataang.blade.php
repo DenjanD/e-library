@@ -173,16 +173,22 @@
                                             <p id="detail1"></p>
                                             <h6 class="mt-3">Nama Anggota</h6>
                                             <p id="detail2"></p>
-                                            <h6 class="mt-3">Telepon</h6>
+                                            <h6 class="mt-3">Tanggal Lahir</h6>
                                             <p id="detail3"></p>
-                                            <h6 class="mt-3">Alamat</h6>
+                                            <h6 class="mt-3">Telepon</h6>
                                             <p id="detail4"></p>
+                                            <h6 class="mt-3">Alamat</h6>
+                                            <p id="detail5"></p>
                                         </div>
                                         <div class="col-md-6">
                                             <h6 class="mt-3">Jenis Kelamin</h6>
-                                            <p id="detail5"></p>
-                                            <h6 class="mt-3">Username</h6>
                                             <p id="detail6"></p>
+                                            <h6 class="mt-3">Username</h6>
+                                            <p id="detail7"></p>
+                                            <h6 class="mt-3">Email</h6>
+                                            <p id="detail8"></p>
+                                            <h6 class="mt-3">Foto</h6>
+                                            <img id="detail9" style="width:100px;height:150px;">
                                         </div>
                                     </div>
                                 </div>
@@ -254,15 +260,18 @@
                     response.detailData.forEach(function(item) {
                         document.getElementById('detail1').innerHTML = item.id_anggota;
                         document.getElementById('detail2').innerHTML = item.nama_anggota;
-                        document.getElementById('detail3').innerHTML = item.telp;
-                        document.getElementById('detail4').innerHTML = item.alamat;
+                        document.getElementById('detail3').innerHTML = item.tgl_lahir;
+                        document.getElementById('detail4').innerHTML = item.telp;
+                        document.getElementById('detail5').innerHTML = item.alamat;
                         if (item.jenis_kelamin == 'L') {
-                            document.getElementById('detail5').innerHTML = 'Laki-Laki';
+                            document.getElementById('detail6').innerHTML = 'Laki-Laki';
                         }
                         if (item.jenis_kelamin == 'P') {
-                            document.getElementById('detai5').innerHTML = 'Perempuan';
+                            document.getElementById('detai6').innerHTML = 'Perempuan';
                         }
-                        document.getElementById('detail6').innerHTML = item.username;
+                        document.getElementById('detail7').innerHTML = item.username;
+                        document.getElementById('detail8').innerHTML = item.email;
+                        document.getElementById('detail9').setAttribute('src', "{{ url('userPhotos') }}" + '/' + item.foto);
                     });
                 }
             });

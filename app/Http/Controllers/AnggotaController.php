@@ -109,7 +109,9 @@ class AnggotaController extends Controller
         }
 
         if ($getAnggota->update()) {
-            $newPict->move(base_path('public/userPhotos'), $getAnggota->foto);
+            if ($newPict != '') {
+                $newPict->move(base_path('public/userPhotos'), $getAnggota->foto);
+            }
             return redirect('profile');
         }
         return response()->json(['msg' => 'Gagal merubah anggota'], 500);

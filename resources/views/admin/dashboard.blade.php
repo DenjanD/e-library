@@ -88,7 +88,7 @@
                 data: {
                     labels: this.label1,
                     datasets: [{
-                        label: "Angka",
+                        label: "Pinjaman",
                         backgroundColor: "rgba(2,117,216,1)",
                         borderColor: "rgba(2,117,216,1)",
                         data: this.value1,
