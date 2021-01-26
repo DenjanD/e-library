@@ -77,6 +77,14 @@
           <!-- Login Form -->
           <div class="row justify-content-center">
             <div class="col-10 col-md-10 align-self-center">
+              @if ($message = Session::get('success'))
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Akun berhasil dibuat!</strong> Silakan login untuk melanjutkan.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              @endif
               <form method="post" action="auth" class="mt-4">
                 @csrf
                 <label class="form-label">Username</label>
@@ -106,6 +114,9 @@
     <!-- /Content -->
 
   </div>
+  <script src="{{ url('vendor/jquery/jquery.min.js') }}"></script>
+  <script src="{{ url('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
 </body>
 
 </html>

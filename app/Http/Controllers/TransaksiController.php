@@ -47,7 +47,7 @@ class TransaksiController extends Controller
         $upStatusBuku->status = 'D';
 
         if ($newTransaksi->save() && $upStatusBuku->update()) {
-            return redirect('myorder');
+            return redirect('myorder')->with(['successOrder' => 'Buku berhasil dipinjam!']);
         }
         return response()->json(['msg' => 'Gagal tambah transaksi'], 500);
     }
@@ -74,7 +74,7 @@ class TransaksiController extends Controller
         }
 
         if ($getTransaksi->update()) {
-            return redirect('myorder');
+            return redirect('myorder')->with(['successReturn' => 'Buku berhasil dikembalikan! Menunggu verifikasi admin']);
         }
         return response()->json(['msg' => 'Gagal merubah transaksi'], 500);
     }
@@ -88,7 +88,7 @@ class TransaksiController extends Controller
         $getBuku->status = 'T';
 
         if ($getTransaksi->update() && $getBuku->update()) {
-            return redirect('admin/transaksi');
+            return redirect('admin/transaksi')->with(['success' => 'Pengembalian telah berhasil diverifikasi!']);
         }
         return response()->json(['msg' => 'Gagal merubah transaksi'], 500);
     }

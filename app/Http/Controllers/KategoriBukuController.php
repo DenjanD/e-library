@@ -26,7 +26,7 @@ class KategoriBukuController extends Controller
         ]);
 
         if ($newKb->save()) {
-            return redirect('admin/katb');
+            return redirect('admin/katb')->with(['success' => 'Kategori buku berhasil ditambahkan!']);
         }
         return response()->json(['msg' => 'Gagal tambah Kategori Buku'], 500);
     }
@@ -40,7 +40,7 @@ class KategoriBukuController extends Controller
         }
 
         if ($getKb->update()) {
-            return redirect('admin/katb');
+            return redirect('admin/katb')->with(['success2' => 'Kategori buku berhasil diubah!']);
         }
         return response()->json(['msg' => 'Gagal merubah Kategori Buku'], 500);
     }

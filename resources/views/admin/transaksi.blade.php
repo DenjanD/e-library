@@ -17,6 +17,14 @@
                     <hr>
                     <div class="row mt-4">
                         <div class="col-md-12">
+                            @if($message = Session::get('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ $message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
                             <div class="d-flex">
                                 <div class="ml-auto mb-3">
                                     <!--<button data-target="#addModal" data-toggle="modal" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;Tambah Data</button>-->

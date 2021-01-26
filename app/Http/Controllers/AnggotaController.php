@@ -64,7 +64,7 @@ class AnggotaController extends Controller
         ]);
 
         if ($newAnggota->save()) {
-            return view('login', ['msg' => 'Akun berhasil dibuat! Silakan login untuk melanjutkan']);
+            return redirect('/')->with(['success' => 'Akun berhasil dibuat, silakan login untuk melanjutkan']);
         }
         return response()->json(['msg' => 'Gagal tambah anggota'], 500);
     }
@@ -112,7 +112,7 @@ class AnggotaController extends Controller
             if ($newPict != '') {
                 $newPict->move(base_path('public/userPhotos'), $getAnggota->foto);
             }
-            return redirect('profile');
+            return redirect('profile')->with(['success' => 'Profil berhasil diubah!']);
         }
         return response()->json(['msg' => 'Gagal merubah anggota'], 500);
     }

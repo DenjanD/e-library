@@ -77,7 +77,7 @@ class BukuController extends Controller
 
         if ($newBuku->save()) {
             $filePhoto->move(base_path('public/bukuPhotos'), $filePhoto->getClientOriginalName());
-            return redirect('admin/buku');
+            return redirect('admin/buku')->with(['success' => 'Data buku berhasil ditambahkan']);
         }
         return response()->json(['msg' => 'Gagal tambah buku'], 500);
     }
@@ -119,9 +119,11 @@ class BukuController extends Controller
         }
 
         if ($getBuku->update()) {
-            File::delete(base_path('public/bukuPhotos/' . $oldPict));
-            $newPhoto->move(base_path('public/bukuPhotos'), $getBuku->gambar);
-            return redirect('admin/buku');
+            if ($newPhoto != '' && $oldPict != '') {
+                File::delete(base_path('public/bukuPhotos/' . $oldPict));
+                $newPhoto->move(base_path('public/bukuPhotos'), $getBuku->gambar);
+            }
+            return redirect('admin/buku')->with(['success' => 'Data buku berhasil diubah']);;
         }
         return response()->json(['msg' => 'Gagal merubah buku'], 500);
     }
