@@ -225,7 +225,7 @@ class AdminController extends Controller
         $isNotDenda = '';
 
         if ($request->input('peminjam') != '--- Pilih Peminjam ---') {
-            $getPeminjam = Anggota::where('nama_anggota', $request->input())->first();
+            $getPeminjam = Anggota::where('nama_anggota', $request->input('peminjam'))->first();
             $peminjam = $getPeminjam->id_anggota;
         }
         if ($request->input('buku') != '--- Pilih Buku ---') {
