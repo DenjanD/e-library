@@ -28,7 +28,7 @@ class AdminController extends Controller
 
         $credentials = Admin::where('id_admin', $request->input('id'))->first();
         if (!$credentials) {
-            return response()->json(['msg' => 'Id atau Password salah!'], 500);
+            return redirect('veryadmin')->with(['warning' => 'Id tidak ditemukan!']);
         }
         $checkPass = decrypt($credentials->password);
 
@@ -37,6 +37,8 @@ class AdminController extends Controller
             $request->session()->put('name', $credentials->nama_admin);
 
             return redirect('admin/dashboard');
+        } else {
+            return redirect('veryadmin')->with(['warning' => 'Password salah! Silakan coba lagi']);
         }
     }
 

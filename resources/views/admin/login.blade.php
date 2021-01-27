@@ -24,6 +24,14 @@
                                     <h3 class="text-center font-weight-light my-4">ELibrary</h3>
                                 </div>
                                 <div class="card-body">
+                                    @if ($message = Session::get('warning'))
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                        {{ $message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    @endif
                                     <form action="admin/login" method="post">
                                         @csrf
                                         <div class="form-group">

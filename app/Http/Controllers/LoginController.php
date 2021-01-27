@@ -31,7 +31,7 @@ class LoginController extends Controller
 
         $credentials = Anggota::where('username', $request->input('uname'))->first();
         if (!$credentials) {
-            return response()->json(['msg' => 'Username atau Password salah!'], 500);
+            return redirect('/')->with(['warning' => 'Username tidak ditemukan!']);
         }
         $checkPass = decrypt($credentials->password);
 
@@ -40,7 +40,7 @@ class LoginController extends Controller
 
             return redirect('home');
         } else {
-            return response()->json(['msg' => 'An Error Occured']);
+            return redirect('/')->with(['warning' => 'Password salah! Silakan coba lagi']);
         }
     }
 
